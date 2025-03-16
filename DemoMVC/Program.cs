@@ -1,3 +1,8 @@
+using Demo.BLL.Services;
+using Demo.DAL.Data.Context;
+using Demo.DAL.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 namespace DemoMVC
 {
     public class Program
@@ -9,6 +14,13 @@ namespace DemoMVC
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddDbContext<ApplicationDbContext>(option =>
+            {
+                var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+                option.UseSqlServer(ConnectionString);
+            });
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IDepartmentService,DepartmentService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -24,7 +36,7 @@ namespace DemoMVC
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
