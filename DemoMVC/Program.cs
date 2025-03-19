@@ -1,5 +1,6 @@
 using Demo.BLL.Services;
 using Demo.DAL.Data.Context;
+using Demo.DAL.Models;
 using Demo.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,8 +20,11 @@ namespace DemoMVC
                 var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
                 option.UseSqlServer(ConnectionString);
             });
-            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            //builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<IDepartmentService,DepartmentService>();
+            builder.Services.AddScoped<IGenericRepository<Department>, GenericRepository<Department>>();
+            builder.Services.AddScoped<IGenericRepository<Employee>, GenericRepository<Employee>>();
+            //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

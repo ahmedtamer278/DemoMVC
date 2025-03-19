@@ -1,11 +1,12 @@
 ﻿using Demo.BLL.DataTransferObject;
+using Demo.DAL.Models;
 using Demo.DAL.Repositories;
 
 namespace Demo.BLL.Services
 {
-    public class DepartmentService(IDepartmentRepository repository) : IDepartmentService
+    public class DepartmentService(IGenericRepository<Department> repository) : IDepartmentService
     {
-        private readonly IDepartmentRepository _repository = repository;
+        private readonly IGenericRepository<Department> _repository = repository;
 
         public IEnumerable<DepartmentResponse> GetAll()
         {

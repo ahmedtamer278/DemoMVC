@@ -42,7 +42,8 @@ namespace Demo.BLL.DataTransferObject
                 CreatedOn = department.CreatedOn,
                 Name = department.Name
             };
-        } public static Department ToRequestUpdate(this DepartmentUpdateRequest department) 
+        } 
+        public static Department ToRequestUpdate(this DepartmentUpdateRequest department) 
         {
             return new()
             {
@@ -54,5 +55,16 @@ namespace Demo.BLL.DataTransferObject
             };
         }
 
+        public static DepartmentUpdateRequest ToUpdateRequest(this DepartmentDetailsResponse department)
+        {
+            return new()
+            {
+                Id = department.Id,
+                Code = department.Code,
+                Description = department.Description,
+                CreatedOn = department.CreatedOn,
+                Name = department.Name
+            };
+        }
     }
 }
