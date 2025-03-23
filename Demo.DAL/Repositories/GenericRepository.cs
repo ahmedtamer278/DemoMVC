@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Demo.DAL.Data.Context;
+﻿
 
 namespace Demo.DAL.Repositories
 {
@@ -29,6 +24,17 @@ namespace Demo.DAL.Repositories
         {
             _context.Set<TEntity>().Remove(entity);
             return _context.SaveChanges();
+        }
+
+        //public IQueryable<TEntity> GetAllQueryable()
+        //{
+        //     return _context.Set<TEntity>().AsNoTracking().Where(d => !d.IsDeleted);
+        //}
+
+        public IEnumerable<TResult> GetAll<TResult>(Expression<Func<TEntity, TResult>> selector)
+        {
+            return _context.Set<TEntity>().AsNoTracking().Where(d => !d.IsDeleted).Select(selector)
+                .ToList();
         }
     }
 }

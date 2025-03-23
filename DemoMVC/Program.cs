@@ -25,6 +25,9 @@ namespace DemoMVC
             builder.Services.AddScoped<IGenericRepository<Department>, GenericRepository<Department>>();
             builder.Services.AddScoped<IGenericRepository<Employee>, GenericRepository<Employee>>();
             //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
+            builder.Services.AddAutoMapper(typeof(Demo.BLL.AssemblyReference).Assembly);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

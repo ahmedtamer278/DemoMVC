@@ -1,5 +1,4 @@
-﻿using Demo.DAL.Models;
-
+﻿
 namespace Demo.BLL.DataTransferObject
 {
     public static class DepartmentFactory
@@ -66,5 +65,13 @@ namespace Demo.BLL.DataTransferObject
                 Name = department.Name
             };
         }
+        public static DepartmentRequest ToRequestMap(this DepartmentUpdateRequest departmentUpdateRequest) => new()
+        {
+            Code = departmentUpdateRequest.Code,
+            CreatedOn = departmentUpdateRequest.CreatedOn,
+            Name = departmentUpdateRequest.Name,
+            Description = departmentUpdateRequest.Description
+            
+        };
     }
 }

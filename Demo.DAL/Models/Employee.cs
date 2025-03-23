@@ -6,7 +6,7 @@ namespace Demo.DAL.Models
     {
         public string Name { get; set; } = null!;
         public int? Age { get; set; }
-        public string? Adress { get; set; }
+        public string Adress { get; set; } = string.Empty;
         public decimal Salary { get; set; }
         public bool IsActive { get; set; }
         public string? Email { get; set; }

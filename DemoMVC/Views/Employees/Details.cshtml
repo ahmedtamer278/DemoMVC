@@ -1,12 +1,12 @@
-﻿@model DepartmentDetailsResponse
+﻿@model EmployeeDetailsResponse
 @{
     ViewData["Title"] = "Details";
 }
-<partial name="Partials/DeleteDetailsPartial" />
 
-<div class="mt-4">
+<partial name="PartialsView/DeleteDetailsPartial" />
+
+    <div class="mt-4">
         <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Edit</a>
         <a asp-action="Index" class="btn btn-outline-dark">Back To list</a>
     </div>
-
 

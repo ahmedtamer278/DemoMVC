@@ -24,6 +24,8 @@ namespace DemoMVC.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
+
         public IActionResult Create(DepartmentRequest request)
         { 
           if(!ModelState.IsValid)  return View(request);
@@ -99,15 +101,15 @@ namespace DemoMVC.Controllers
         }
         #endregion
         #region Delete
-        //[HttpGet]
-        //public IActionResult Delete(int? id)
-        //{
-        //    if (!id.HasValue) return BadRequest();
-        //    var department = _departmentService.GetById(id.Value);
-        //    if (department is null) return NotFound();
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            if (!id.HasValue) return BadRequest();
+            var department = _departmentService.GetById(id.Value);
+            if (department is null) return NotFound();
 
-        //    return View(department);
-        //}
+            return View(department);
+        }
 
         [HttpPost,ActionName("Delete") ]
         public IActionResult ConfirmDelete(int? id)
