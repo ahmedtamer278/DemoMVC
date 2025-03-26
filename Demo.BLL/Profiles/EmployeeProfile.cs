@@ -5,8 +5,10 @@ namespace Demo.BLL.Profiles
     {
         public EmployeeProfile()
         {
-            CreateMap<Employee, EmployeeDetailsResponse>();
-            CreateMap<Employee, EmployeeResponse>();
+            CreateMap<Employee, EmployeeDetailsResponse>()
+                .ForMember(d=>d.Department,options=>options.MapFrom(s=>s.Department.Name));
+            CreateMap<Employee, EmployeeResponse>()
+                 .ForMember(d => d.Department, options => options.MapFrom(s => s.Department.Name));
 
             CreateMap<EmployeeRequest, Employee>();
             CreateMap<EmployeeUpdateRequest, Employee>();

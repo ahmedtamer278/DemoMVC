@@ -1,4 +1,5 @@
-﻿
+﻿using Demo.BLL.DataTransferObject.Departments;
+
 namespace Demo.BLL.Services
 {
     public interface IDepartmentService

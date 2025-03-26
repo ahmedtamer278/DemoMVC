@@ -4,29 +4,31 @@ using Demo.DAL.Models.ommon;
 
 namespace Demo.BLL.Services
 {
-    public class EmployeeService(IGenericRepository<Employee> repository , IMapper mapper) : IEmployeeService
+    public class EmployeeService(IUnitOfWork unitOfWork , IMapper mapper) : IEmployeeService
     {
-        private readonly IGenericRepository<Employee> _repository = repository;
+        //private readonly IGenericRepository<Employee> _unitOfWork.Employees = repository;
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IMapper _mapper = mapper;
 
-        public IEnumerable<EmployeeResponse> GetAll()
+        public IEnumerable<EmployeeResponse> GetAll(string? SearchValue)
         {
-            //var Employees = _repository.GetAll();
-            //// manual mapping
-
-            //return _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeResponse>>(Employees);
-            //var employee = _repository.GetAll().Select(e => new EmployeeResponse
-            //{
-            //    Age = e.Age,
-            //    Email = e.Email,
-            //    EmployeeType = e.EmployeeType.ToString(),
-            //    Gender = e.Gender.ToString(),
-            //    Id = e.Id,
-            //    IsActive = e.IsActive,
-            //    Name = e.Name,
-            //    Salary = e.Salary
-            //}) ;
-            var employees = _repository.GetAll(e => new EmployeeResponse
+            ///var Employees = _unitOfWork.Employees.GetAll();
+            /// manual mapping
+            ///return _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeResponse>>(Employees);
+            ///var employee = _unitOfWork.Employees.GetAll().Select(e => new EmployeeResponse
+            ///{
+            ///    Age = e.Age,
+            ///    Email = e.Email,
+            ///    EmployeeType = e.EmployeeType.ToString(),
+            ///    Gender = e.Gender.ToString(),
+            ///    Id = e.Id,
+            ///    IsActive = e.IsActive,
+            ///    Name = e.Name,
+            ///    Salary = e.Salary
+            ///}) ;
+            
+            if(string.IsNullOrWhiteSpace(SearchValue))
+            return _unitOfWork.Employees.GetAll(e => new EmployeeResponse
             {
                 Age = e.Age,
                 Email = e.Email,
@@ -35,14 +37,30 @@ namespace Demo.BLL.Services
                 Id = e.Id,
                 IsActive = e.IsActive,
                 Name = e.Name,
-                Salary = e.Salary
-            });
-            return employees;
+                Salary = e.Salary,
+                Department = e.Department.Name
+            },e=>!e.IsDeleted ,
+            e=>e.Department);
+
+            return _unitOfWork.Employees.GetAll(e => new EmployeeResponse
+            {
+                Age = e.Age,
+                Email = e.Email,
+                EmployeeType = e.EmployeeType.ToString(),
+                Gender = e.Gender.ToString(),
+                Id = e.Id,
+                IsActive = e.IsActive,
+                Name = e.Name,
+                Salary = e.Salary,
+                Department = e.Department.Name
+            }, e => !e.IsDeleted && e.Name.ToLower().Contains(SearchValue.ToLower()),
+           e => e.Department);
+            //return employees;
         }
 
         public EmployeeDetailsResponse? GetById(int id)
         {
-            var Employee = _repository.GetById(id);
+            var Employee = _unitOfWork.Employees.GetById(id);
             // manual mapping
             return Employee is null ? null : _mapper.Map<Employee, EmployeeDetailsResponse>(Employee);
 
@@ -51,22 +69,25 @@ namespace Demo.BLL.Services
         public int Add(EmployeeRequest request)
         {
             var Employee = _mapper.Map<EmployeeRequest,Employee>(request);
-            return _repository.Add(Employee);
+             _unitOfWork.Employees.Add(Employee);
+            return _unitOfWork.SaveChanges();
         }
         public int Update(EmployeeUpdateRequest updaterequest)
         {
             var Employee = _mapper.Map<EmployeeUpdateRequest,Employee>(updaterequest);
             
-            return _repository.Update(Employee);
+             _unitOfWork.Employees.Update(Employee);
+            return _unitOfWork.SaveChanges();
         }
 
         public bool Delete(int id)
         {
-            var Employee = _repository.GetById(id);
+            var Employee = _unitOfWork.Employees.GetById(id);
             if (Employee is null)
                 return false;
             Employee.IsDeleted = true;
-            return _repository.Update(Employee) > 0 ? true : false;
+            _unitOfWork.Employees.Update(Employee);
+            return _unitOfWork.SaveChanges() > 0 ? true : false;
 
         }
     }

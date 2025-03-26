@@ -1,4 +1,4 @@
-﻿using Demo.BLL.DataTransferObject;
+﻿using Demo.BLL.DataTransferObject.Departments;
 using Demo.BLL.Services;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,8 +1,3 @@
-using Demo.BLL.Services;
-using Demo.DAL.Data.Context;
-using Demo.DAL.Models;
-using Demo.DAL.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace DemoMVC
 {
@@ -21,11 +16,13 @@ namespace DemoMVC
                 option.UseSqlServer(ConnectionString);
             });
             //builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IDepartmentService,DepartmentService>();
-            builder.Services.AddScoped<IGenericRepository<Department>, GenericRepository<Department>>();
-            builder.Services.AddScoped<IGenericRepository<Employee>, GenericRepository<Employee>>();
-            //builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            ///builder.Services.AddScoped<IGenericRepository<Department>, GenericRepository<Department>>();
+            ///builder.Services.AddScoped<IGenericRepository<Employee>, GenericRepository<Employee>>();
+            ///builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             builder.Services.AddAutoMapper(typeof(Demo.BLL.AssemblyReference).Assembly);
             var app = builder.Build();

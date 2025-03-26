@@ -1,6 +1,8 @@
 ﻿
 
+using Demo.BLL.Services;
 using Demo.DAL.Models.ommon;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DemoMVC.Controllers
 {
@@ -11,16 +13,19 @@ namespace DemoMVC.Controllers
         private readonly ILogger<EmployeesController> _logger = logger;
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string? SearchValue)
         {
-            var Employee = _EmployeeService.GetAll();
+            var Employee = _EmployeeService.GetAll(SearchValue);
             return View(Employee); // Send Data From Action To View
         }
 
         #region Create
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create([FromServices] IDepartmentService departmentService)
         {
+            var departments = departmentService.GetAll();
+            var items = new SelectList(departments,nameof(DepartmentResponse.Id),nameof(DepartmentResponse.Name));
+            ViewBag.Departments = items;
             return View();
         }
         [HttpPost]
@@ -64,7 +69,7 @@ namespace DemoMVC.Controllers
         #endregion
         #region Edit
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int? id, [FromServices] IDepartmentService departmentService)
         {
             if (!id.HasValue) return BadRequest();
             var Employee = _EmployeeService.GetById(id.Value);
@@ -84,6 +89,9 @@ namespace DemoMVC.Controllers
                 PhoneNumber = Employee.PhoneNumber,
                 Salary = Employee.Salary
             };
+            var departments = departmentService.GetAll();
+            var items = new SelectList(departments, nameof(DepartmentResponse.Id), nameof(DepartmentResponse.Name));
+            ViewBag.Departments = items;
             return View(employeeRequest);
         }
 

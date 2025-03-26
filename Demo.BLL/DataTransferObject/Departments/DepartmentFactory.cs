@@ -1,5 +1,4 @@
-﻿
-namespace Demo.BLL.DataTransferObject
+﻿namespace Demo.BLL.DataTransferObject.Departments
 {
     public static class DepartmentFactory
     {
@@ -32,7 +31,7 @@ namespace Demo.BLL.DataTransferObject
             };
         }
 
-        public static Department ToRequest(this DepartmentRequest department) 
+        public static Department ToRequest(this DepartmentRequest department)
         {
             return new()
             {
@@ -41,8 +40,8 @@ namespace Demo.BLL.DataTransferObject
                 CreatedOn = department.CreatedOn,
                 Name = department.Name
             };
-        } 
-        public static Department ToRequestUpdate(this DepartmentUpdateRequest department) 
+        }
+        public static Department ToRequestUpdate(this DepartmentUpdateRequest department)
         {
             return new()
             {
@@ -71,7 +70,7 @@ namespace Demo.BLL.DataTransferObject
             CreatedOn = departmentUpdateRequest.CreatedOn,
             Name = departmentUpdateRequest.Name,
             Description = departmentUpdateRequest.Description
-            
+
         };
     }
 }

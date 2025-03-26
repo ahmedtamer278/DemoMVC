@@ -19,7 +19,7 @@ namespace Demo.DAL.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "varchar(50)", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: true),
-                    Adress = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Adress = table.Column<string>(type: "varchar(100)", nullable: true),
                     Salary = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),

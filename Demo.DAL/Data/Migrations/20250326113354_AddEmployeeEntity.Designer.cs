@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Demo.DAL.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250319065525_AddEmployeeEntity")]
+    [Migration("20250326113354_AddEmployeeEntity")]
     partial class AddEmployeeEntity
     {
         /// <inheritdoc />
@@ -76,7 +76,6 @@ namespace Demo.DAL.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Adress")
-                        .IsRequired()
                         .HasColumnType("varchar(100)");
 
                     b.Property<int?>("Age")

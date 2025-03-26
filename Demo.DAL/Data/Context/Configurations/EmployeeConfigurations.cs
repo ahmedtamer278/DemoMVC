@@ -1,5 +1,7 @@
 ﻿
 
+using Microsoft.Data.SqlClient;
+
 namespace Demo.DAL.Data.Context.Configurations
 {
     internal class EmployeeConfigurations : IEntityTypeConfiguration<Employee>
@@ -12,7 +14,7 @@ namespace Demo.DAL.Data.Context.Configurations
 
             builder.Property(e => e.Adress)
                 .HasColumnType("varchar(100)")
-                .IsRequired();
+                .IsRequired(false);
 
             builder.Property(e => e.Salary)
                 .HasColumnType("decimal(10,2)")
@@ -30,6 +32,10 @@ namespace Demo.DAL.Data.Context.Configurations
                    EmployeeType => EmployeeType.ToString(), EmployeeType => Enum.Parse<EmployeeType>(EmployeeType)
                );
 
+            builder.HasOne(e => e.Department)
+                .WithMany(d => d.Employees)
+                .HasForeignKey(e => e.DepartmentId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

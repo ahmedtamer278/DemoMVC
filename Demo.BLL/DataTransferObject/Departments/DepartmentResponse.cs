@@ -1,4 +1,4 @@
-﻿namespace Demo.BLL.DataTransferObject
+﻿namespace Demo.BLL.DataTransferObject.Departments
 {
     public class DepartmentResponse
     {

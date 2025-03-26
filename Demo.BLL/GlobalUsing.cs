@@ -1,4 +1,4 @@
-﻿global using Demo.BLL.DataTransferObject;
+﻿global using Demo.BLL.DataTransferObject.Departments;
 global using Demo.BLL.DataTransferObject.Employees;
 global using Demo.DAL.Models;
 global using Demo.DAL.Repositories;
