@@ -1,4 +1,7 @@
 
+using Demo.BLL.Services.AttachmentService;
+using Microsoft.AspNetCore.Identity;
+
 namespace DemoMVC
 {
     public class Program
@@ -23,8 +26,11 @@ namespace DemoMVC
             ///builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddTransient<IAttachmentService,AttachmentService>();
 
             builder.Services.AddAutoMapper(typeof(Demo.BLL.AssemblyReference).Assembly);
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -39,8 +45,8 @@ namespace DemoMVC
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",

@@ -1,5 +1,6 @@
 ﻿using Demo.BLL.DataTransferObject.Departments;
 using Demo.BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoMVC.Controllers
@@ -10,6 +11,7 @@ namespace DemoMVC.Controllers
         private readonly IWebHostEnvironment _env = webHostEnvironment;
         private readonly ILogger<DepartmentsController> _logger = logger;
 
+        [Authorize]
         [HttpGet]
         public IActionResult Index()
         {

@@ -2,6 +2,7 @@
 
 using Demo.BLL.Services;
 using Demo.DAL.Models.ommon;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DemoMVC.Controllers
@@ -12,6 +13,7 @@ namespace DemoMVC.Controllers
         private readonly IWebHostEnvironment _env = webHostEnvironment;
         private readonly ILogger<EmployeesController> _logger = logger;
 
+        [Authorize]
         [HttpGet]
         public IActionResult Index(string? SearchValue)
         {
